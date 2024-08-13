@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"lib": ["ESNext"],
+		"module": "nodenext",
+		"target": "ESNext",
+		"moduleResolution": "nodenext",
+		"moduleDetection": "force",
+		"allowJs": true,
+		"noEmit": true,
+		"checkJs": true,
+		"strict": true
+	}
+}

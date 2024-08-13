@@ -1,0 +1,52 @@
+{
+	"name": "png-test-snapshotter",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "A test utility for creating and diffing PNG snapshots",
+	"main": "index.js",
+	"scripts": {
+		"prepack": "tsc --declaration --declarationMap --emitDeclarationOnly --allowJs index.js",
+		"test": "node --test --experimental-test-coverage",
+		"check": "biome check . && tsc",
+		"fix": "biome check --write ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/CMTegner/png-test-snapshotter.git"
+	},
+	"keywords": [
+		"test",
+		"png",
+		"snapshot",
+		"snapshotter",
+		"diff",
+		"screenshot",
+		"image",
+		"assert",
+		"toMatchSnapshot"
+	],
+	"author": "Christian Maughan Tegnér <christian.tegner@gmail.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CMTegner/png-test-snapshotter/issues"
+	},
+	"homepage": "https://github.com/CMTegner/png-test-snapshotter#readme",
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@types/node": "^22.2.0",
+		"@types/pixelmatch": "^5.2.6",
+		"@types/pngjs": "^6.0.5",
+		"typescript": "^5.5.4"
+	},
+	"dependencies": {
+		"pixelmatch": "^6.0.0",
+		"pngjs": "^7.0.0"
+	},
+	"files": [
+		"index.js",
+		"index.d.ts",
+		"index.d.ts.map",
+		"README.md",
+		"LICENSE.txt"
+	]
+}
