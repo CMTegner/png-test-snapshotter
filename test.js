@@ -6,7 +6,7 @@ import createSnapshotter from "./index.js";
 
 test("writes snapshots for new comparisons", async (t) => {
 	const snapshotsLocation = new URL("__screenshots__/", import.meta.url);
-	const assertSnapshot = await createSnapshotter(import.meta.url, {
+	const assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 		failOnUnmatchedSnapshots: true,
 		snapshotsLocation,
 		updateSnapshots: false,
@@ -47,7 +47,7 @@ test("does not err on snapshot match", async (t) => {
 				import.meta.url,
 			),
 		);
-		const assertSnapshot = await createSnapshotter(import.meta.url, {
+		const assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			failOnUnmatchedSnapshots: true,
 			updateSnapshots: false,
 		});
@@ -84,7 +84,7 @@ test("errs on snapshot content mismatch", async (t) => {
 				import.meta.url,
 			),
 		);
-		assertSnapshot = await createSnapshotter(import.meta.url, {
+		assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			failOnUnmatchedSnapshots: true,
 			updateSnapshots: false,
 		});
@@ -127,7 +127,7 @@ test("errs on snapshot size mismatch", async (t) => {
 				import.meta.url,
 			),
 		);
-		assertSnapshot = await createSnapshotter(import.meta.url, {
+		assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			updateSnapshots: false,
 			failOnUnmatchedSnapshots: true,
 		});
@@ -170,7 +170,7 @@ test("updates outdated snapshots when updateSnapshots is true", async (t) => {
 				import.meta.url,
 			),
 		);
-		assertSnapshot = await createSnapshotter(import.meta.url, {
+		assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			failOnUnmatchedSnapshots: true,
 			updateSnapshots: true,
 		});
@@ -206,7 +206,7 @@ test("errs on unmatched snapshots when failOnUnmatchedSnapshots is true", async 
 				import.meta.url,
 			),
 		);
-		const assertSnapshot = await createSnapshotter(import.meta.url, {
+		const assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			failOnUnmatchedSnapshots: true,
 			updateSnapshots: false,
 		});
@@ -236,7 +236,7 @@ test("does not err on unmatched snapshots when failOnUnmatchedSnapshots is false
 				import.meta.url,
 			),
 		);
-		const assertSnapshot = await createSnapshotter(import.meta.url, {
+		const assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
 			failOnUnmatchedSnapshots: false,
 			updateSnapshots: false,
 		});

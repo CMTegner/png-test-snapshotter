@@ -21,7 +21,7 @@ import generateImage from "./generate-image.js";
 
 let assertSnapshot;
 before(async () => {
-    assertSnapshot = await createPNGSnapshotter(import.meta.url);
+    assertSnapshot = await createPNGSnapshotter(new URL(import.meta.url));
 });
 
 after(() => {
@@ -41,7 +41,7 @@ test("image generation works as expected", async (t) => {
 
 ### Main entrypoint: `createPNGSnapshotter(parentURL, options)`
 
-This is the module's default export. It expects the first argument passed in to be the URL of the test suite that will be using the snapshotter. This will in most cases be `import.meta.url`.
+This is the module's default export. It expects the first argument passed in to be the URL of the test suite that will be using the snapshotter. This will in most cases be `new URL(import.meta.url)`.
 
 An optional second argument can be provided, which when provided can contain the following fields:
 * snapshotsLocation: The location of the snapshots to evaluate. Defaults to a directory named `"__snapshots__"` with the same parent as the test suite (`parentURL`).
@@ -68,7 +68,7 @@ import createPNGSnapshotter from "png-test-snapshotter";
 import generateImage from "./generate-image.js";
 
 test("image generation works as expected", async (t) => {
-    using assertSnapshot = await createPNGSnapshotter(import.meta.url);
+    using assertSnapshot = await createPNGSnapshotter(new URL(import.meta.url));
     const image = generateImage(...);
     await assertSnapshot(
         t.name,

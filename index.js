@@ -15,7 +15,7 @@ import { PNG } from "pngjs";
  */
 
 /**
- * @param {string} parentURL
+ * @param {URL} parentURL
  * @param {Object} [options]
  * @param {boolean} [options.failOnUnmatchedSnapshots]
  * @param {URL} [options.snapshotsLocation]
@@ -38,7 +38,7 @@ export default async function createPNGSnapshotter(
 			files.add(file);
 		}
 	}
-	const safeSuiteFilename = path.basename(parentURL).replaceAll(".", "_");
+	const safeSuiteFilename = path.basename(parentURL.pathname).replaceAll(".", "_");
 	/** @type {Map<string, number>} */
 	const testCounter = new Map();
 	/**
