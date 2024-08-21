@@ -1,7 +1,7 @@
 {
 	"name": "png-test-snapshotter",
 	"type": "module",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "A test utility for creating and diffing PNG snapshots",
 	"main": "index.js",
 	"scripts": {
