@@ -47,6 +47,7 @@ An optional second argument can be provided, which when provided can contain the
 * snapshotDirname: The name of the directory containing the snapshots to evaluate, relative to `parentURL`. Defaults to `"__snapshots__"`.
 * failOnUnmatchedSnapshots: Whether to raise an exception during cleanup (see below) if there are any unmatched snapshots in `snapshotDirname`. Defaults to `false` if node was invoked with the `--test-only` command-line option, `true` otherwise.
 * updateSnapshots: When `true` the snapshotter will skip the matching process and instead write the input to the corresponding snapshot file. Defaults to `true` if node was invoked with the `--test-update-snapshots` command-line option, `false` otherwise.
+* differenceDirname: The name of the directory where the diff images will be stored. Defaults to an operating system temporary folder. Use `import.meta.dirname` for directory name of current module.
 
 The return value is the snapshotter function which will be used to create snapshots and assert no differences in future runs:
 

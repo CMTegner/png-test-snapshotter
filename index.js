@@ -20,6 +20,7 @@ import { PNG } from "pngjs";
  * @param {boolean} [options.failOnUnmatchedSnapshots]
  * @param {string} [options.snapshotDirname]
  * @param {boolean} [options.updateSnapshots]
+ * @param {string} [options.differenceDirname]
  * @return {Promise<PNGSnapshotter>}
  */
 export default async function createPNGSnapshotter(
@@ -28,6 +29,7 @@ export default async function createPNGSnapshotter(
 		failOnUnmatchedSnapshots = !process.execArgv.includes("--test-only"),
 		snapshotDirname = "__snapshots__",
 		updateSnapshots = process.execArgv.includes("--test-update-snapshots"),
+		differenceDirname = os.tmpdir(),
 	} = {},
 ) {
 	const snapshotsLocation = new URL(`${snapshotDirname}/`, parentURL);
@@ -64,7 +66,7 @@ export default async function createPNGSnapshotter(
 			);
 			if (width !== expected.width || height !== expected.height) {
 				const actualFilename = path.join(
-					os.tmpdir(),
+					differenceDirname,
 					`actual_${snapshotFilename}`,
 				);
 				await fs.writeFile(actualFilename, PNG.sync.write(actual));
@@ -79,7 +81,7 @@ export default async function createPNGSnapshotter(
 				PNG.bitblt(diff, comparison, 0, 0, width, height, width, 0);
 				PNG.bitblt(actual, comparison, 0, 0, width, height, width * 2, 0);
 				const comparisonFileName = path.join(
-					os.tmpdir(),
+					differenceDirname,
 					`expected-diff-actual_${snapshotFilename}`,
 				);
 				await fs.writeFile(comparisonFileName, PNG.sync.write(comparison));
