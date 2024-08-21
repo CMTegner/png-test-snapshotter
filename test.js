@@ -18,9 +18,7 @@ test("writes snapshots for new comparisons", async (t) => {
 				new URL("./__fixtures__/original.png", import.meta.url),
 			),
 		);
-		const snapshots = await fs.readdir(
-			snapshotsLocation,
-		);
+		const snapshots = await fs.readdir(snapshotsLocation);
 		assert.equal(snapshots.length, 1);
 		assert.equal(
 			snapshots[0],
