@@ -39,19 +39,19 @@ test("image generation works as expected", async (t) => {
 
 ## API
 
-### Main entrypoint: `createPNGSnapshotter(parentURL, options)`
+### Main entrypoint: `createPNGSnapshotter(parentURL: URL, options)`
 
 This is the module's default export. It expects the first argument passed in to be the URL of the test suite that will be using the snapshotter. This will in most cases be `new URL(import.meta.url)`.
 
 An optional second argument can be provided, which when provided can contain the following fields:
-* snapshotsLocation: The location of the snapshots to evaluate. Defaults to a directory named `"__snapshots__"` with the same parent as the test suite (`parentURL`).
-* diffsLocation: The desired output location for any visual difference representation generated as the result of a failed match. Defaults to the OS' temporary directory.
-* failOnUnmatchedSnapshots: Whether to raise an exception during cleanup (see below) if there are any unmatched snapshots in `snapshotDirname`. Defaults to `false` if node was invoked with the `--test-only` command-line option, `true` otherwise.
-* updateSnapshots: When `true` the snapshotter will skip the matching process and instead write the input to the corresponding snapshot file. Defaults to `true` if node was invoked with the `--test-update-snapshots` command-line option, `false` otherwise.
+* `snapshotsLocation: URL`: The location of the snapshots to evaluate. Defaults to a directory named `"__snapshots__"` with the same parent as the test suite (`parentURL`).
+* `diffsLocation: URL`: The desired output location for any visual difference representation generated as the result of a failed match. Defaults to the OS' temporary directory.
+* `failOnUnmatchedSnapshots: boolean`: Whether to raise an exception during cleanup (see below) if there are any unmatched snapshots in `snapshotDirname`. Defaults to `false` if node was invoked with the `--test-only` command-line option, `true` otherwise.
+* `updateSnapshots: boolean`: When `true` the snapshotter will skip the matching process and instead write the input to the corresponding snapshot file. Defaults to `true` if node was invoked with the `--test-update-snapshots` command-line option, `false` otherwise.
 
 The return value is the snapshotter function which will be used to create snapshots and assert no differences in future runs:
 
-`snapshotter(testName, png)`
+`snapshotter(testName: string, png: Buffer)`
 
 The first argument should be set to the test name. The second argument is a Buffer containing the PNG. This function will raise an exception if the provided PNG differs from an existing snapshot. The assertion message will contain the location of the diff which can be viewed for a visual representation of the difference.
 
