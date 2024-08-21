@@ -31,14 +31,14 @@ export default async function createPNGSnapshotter(
 	} = {},
 ) {
 	await fs.mkdir(snapshotsLocation, { recursive: true });
+	const safeSuiteFilename = path.basename(parentURL.pathname).replaceAll(".", "_");
 	/** @type {Set<string>} */
 	const files = new Set();
 	for (const file of await fs.readdir(snapshotsLocation)) {
-		if (file.endsWith(".png")) {
+		if (file.startsWith(`${safeSuiteFilename}_`) && file.endsWith(".png")) {
 			files.add(file);
 		}
 	}
-	const safeSuiteFilename = path.basename(parentURL.pathname).replaceAll(".", "_");
 	/** @type {Map<string, number>} */
 	const testCounter = new Map();
 	/**

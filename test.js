@@ -43,6 +43,13 @@ test("does not err on snapshot match", async (t) => {
 		await fs.cp(
 			new URL("__fixtures__/original.png", import.meta.url),
 			new URL(
+				"__snapshots__/different_test_js_does_not_err_on_snapshot_match_1.png",
+				import.meta.url,
+			),
+		);
+		await fs.cp(
+			new URL("__fixtures__/original.png", import.meta.url),
+			new URL(
 				"__snapshots__/test_js_does_not_err_on_snapshot_match_1.png",
 				import.meta.url,
 			),
