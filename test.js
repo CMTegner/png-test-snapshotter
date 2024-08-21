@@ -5,9 +5,10 @@ import { test } from "node:test";
 import createSnapshotter from "./index.js";
 
 test("writes snapshots for new comparisons", async (t) => {
+	const snapshotsLocation = new URL("__screenshots__/", import.meta.url);
 	const assertSnapshot = await createSnapshotter(import.meta.url, {
 		failOnUnmatchedSnapshots: true,
-		snapshotDirname: "__screenshots__",
+		snapshotsLocation,
 		updateSnapshots: false,
 	});
 	try {
@@ -18,7 +19,7 @@ test("writes snapshots for new comparisons", async (t) => {
 			),
 		);
 		const snapshots = await fs.readdir(
-			new URL("__screenshots__", import.meta.url),
+			snapshotsLocation,
 		);
 		assert.equal(snapshots.length, 1);
 		assert.equal(
@@ -27,7 +28,7 @@ test("writes snapshots for new comparisons", async (t) => {
 		);
 		assertSnapshot.assertNoUnmatchedSnapshots();
 	} finally {
-		await fs.rm(new URL("__screenshots__", import.meta.url), {
+		await fs.rm(snapshotsLocation, {
 			force: true,
 			recursive: true,
 		});

@@ -18,7 +18,7 @@ import { PNG } from "pngjs";
  * @param {string} parentURL
  * @param {Object} [options]
  * @param {boolean} [options.failOnUnmatchedSnapshots]
- * @param {string} [options.snapshotDirname]
+ * @param {URL} [options.snapshotsLocation]
  * @param {boolean} [options.updateSnapshots]
  * @return {Promise<PNGSnapshotter>}
  */
@@ -26,11 +26,10 @@ export default async function createPNGSnapshotter(
 	parentURL,
 	{
 		failOnUnmatchedSnapshots = !process.execArgv.includes("--test-only"),
-		snapshotDirname = "__snapshots__",
+		snapshotsLocation = new URL("__snapshots__/", parentURL),
 		updateSnapshots = process.execArgv.includes("--test-update-snapshots"),
 	} = {},
 ) {
-	const snapshotsLocation = new URL(`${snapshotDirname}/`, parentURL);
 	await fs.mkdir(snapshotsLocation, { recursive: true });
 	/** @type {Set<string>} */
 	const files = new Set();

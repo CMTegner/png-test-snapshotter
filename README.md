@@ -44,7 +44,7 @@ test("image generation works as expected", async (t) => {
 This is the module's default export. It expects the first argument passed in to be the URL of the test suite that will be using the snapshotter. This will in most cases be `import.meta.url`.
 
 An optional second argument can be provided, which when provided can contain the following fields:
-* snapshotDirname: The name of the directory containing the snapshots to evaluate, relative to `parentURL`. Defaults to `"__snapshots__"`.
+* snapshotsLocation: The location of the snapshots to evaluate. Defaults to a directory named `"__snapshots__"` with the same parent as the test suite (`parentURL`).
 * failOnUnmatchedSnapshots: Whether to raise an exception during cleanup (see below) if there are any unmatched snapshots in `snapshotDirname`. Defaults to `false` if node was invoked with the `--test-only` command-line option, `true` otherwise.
 * updateSnapshots: When `true` the snapshotter will skip the matching process and instead write the input to the corresponding snapshot file. Defaults to `true` if node was invoked with the `--test-update-snapshots` command-line option, `false` otherwise.
 
