@@ -32,6 +32,10 @@ export default async function createPNGSnapshotter(
 		updateSnapshots = process.execArgv.includes("--test-update-snapshots"),
 	} = {},
 ) {
+	assert(
+		diffsLocation.pathname.endsWith("/"),
+		`Invalid \`diffsLocation\`. Expected the location to be a directory, got "${diffsLocation}". (Tip: Ensure that the location has a trailing slash)`,
+	);
 	await fs.mkdir(diffsLocation, { recursive: true });
 	await fs.mkdir(snapshotsLocation, { recursive: true });
 	const safeSuiteFilename = path

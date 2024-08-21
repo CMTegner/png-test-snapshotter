@@ -266,3 +266,18 @@ test("does not err on unmatched snapshots when failOnUnmatchedSnapshots is false
 		});
 	}
 });
+
+test("errs if `diffsLocation` is not a directory", async (t) => {
+	const diffsLocation = new URL("__diffs__", import.meta.url);
+	try {
+		await createSnapshotter(new URL(import.meta.url), {
+			diffsLocation,
+		});
+	} catch (error) {
+		assert(error instanceof AssertionError);
+		assert.equal(
+			error.message,
+			`Invalid \`diffsLocation\`. Expected the location to be a directory, got "${diffsLocation}". (Tip: Ensure that the location has a trailing slash)`,
+		);
+	}
+});
