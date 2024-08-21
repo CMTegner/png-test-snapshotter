@@ -7,7 +7,7 @@ import createSnapshotter from "./index.js";
 test("writes snapshots for new comparisons", async (t) => {
 	const assertSnapshot = await createSnapshotter(import.meta.url, {
 		failOnUnmatchedSnapshots: true,
-		snapshotDirname: "__snapshots__",
+		snapshotDirname: "__screenshots__",
 		updateSnapshots: false,
 	});
 	try {
@@ -18,7 +18,7 @@ test("writes snapshots for new comparisons", async (t) => {
 			),
 		);
 		const snapshots = await fs.readdir(
-			new URL("__snapshots__", import.meta.url),
+			new URL("__screenshots__", import.meta.url),
 		);
 		assert.equal(snapshots.length, 1);
 		assert.equal(
@@ -27,7 +27,7 @@ test("writes snapshots for new comparisons", async (t) => {
 		);
 		assertSnapshot.assertNoUnmatchedSnapshots();
 	} finally {
-		await fs.rm(new URL("__snapshots__", import.meta.url), {
+		await fs.rm(new URL("__screenshots__", import.meta.url), {
 			force: true,
 			recursive: true,
 		});
