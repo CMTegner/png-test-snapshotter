@@ -31,7 +31,9 @@ export default async function createPNGSnapshotter(
 	} = {},
 ) {
 	await fs.mkdir(snapshotsLocation, { recursive: true });
-	const safeSuiteFilename = path.basename(parentURL.pathname).replaceAll(".", "_");
+	const safeSuiteFilename = path
+		.basename(parentURL.pathname)
+		.replaceAll(".", "_");
 	/** @type {Set<string>} */
 	const files = new Set();
 	for (const file of await fs.readdir(snapshotsLocation)) {
