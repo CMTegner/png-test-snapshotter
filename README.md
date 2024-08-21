@@ -29,10 +29,10 @@ after(() => {
 });
 
 test("image generation works as expected", async (t) => {
-    const generated = generateImage(...);
+    const image = generateImage(...);
     await assertSnapshot(
         t.name,
-        generateImage,
+        image,
     );
 });
 ```
@@ -69,10 +69,10 @@ import generateImage from "./generate-image.js";
 
 test("image generation works as expected", async (t) => {
     using assertSnapshot = await createPNGSnapshotter(import.meta.url);
-    const generated = generateImage(...);
+    const image = generateImage(...);
     await assertSnapshot(
         t.name,
-        generateImage,
+        image,
     );
     // assertSnapshot.assertNoUnmatchedSnapshots() will be invoked automatically when this block is exited
 });
