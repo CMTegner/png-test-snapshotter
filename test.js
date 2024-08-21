@@ -50,7 +50,6 @@ test("does not err on snapshot match", async (t) => {
 		);
 		const assertSnapshot = await createSnapshotter(import.meta.url, {
 			failOnUnmatchedSnapshots: true,
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: false,
 		});
 		await assertSnapshot(
@@ -88,7 +87,6 @@ test("errs on snapshot content mismatch", async (t) => {
 		);
 		assertSnapshot = await createSnapshotter(import.meta.url, {
 			failOnUnmatchedSnapshots: true,
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: false,
 		});
 		await assertSnapshot(
@@ -131,7 +129,6 @@ test("errs on snapshot size mismatch", async (t) => {
 			),
 		);
 		assertSnapshot = await createSnapshotter(import.meta.url, {
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: false,
 			failOnUnmatchedSnapshots: true,
 		});
@@ -176,7 +173,6 @@ test("updates outdated snapshots when updateSnapshots is true", async (t) => {
 		);
 		assertSnapshot = await createSnapshotter(import.meta.url, {
 			failOnUnmatchedSnapshots: true,
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: true,
 		});
 		await assertSnapshot(
@@ -213,7 +209,6 @@ test("errs on unmatched snapshots when failOnUnmatchedSnapshots is true", async 
 		);
 		const assertSnapshot = await createSnapshotter(import.meta.url, {
 			failOnUnmatchedSnapshots: true,
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: false,
 		});
 		assert.throws(
@@ -244,7 +239,6 @@ test("does not err on unmatched snapshots when failOnUnmatchedSnapshots is false
 		);
 		const assertSnapshot = await createSnapshotter(import.meta.url, {
 			failOnUnmatchedSnapshots: false,
-			snapshotDirname: "__snapshots__",
 			updateSnapshots: false,
 		});
 		assertSnapshot.assertNoUnmatchedSnapshots();
