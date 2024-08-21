@@ -37,6 +37,10 @@ export default async function createPNGSnapshotter(
 		`Invalid \`diffsLocation\`. Expected the location to be a directory, got "${diffsLocation}". (Tip: Ensure that the location has a trailing slash)`,
 	);
 	await fs.mkdir(diffsLocation, { recursive: true });
+	assert(
+		snapshotsLocation.pathname.endsWith("/"),
+		`Invalid \`snapshotsLocation\`. Expected the location to be a directory, got "${snapshotsLocation}". (Tip: Ensure that the location has a trailing slash)`,
+	);
 	await fs.mkdir(snapshotsLocation, { recursive: true });
 	const safeSuiteFilename = path
 		.basename(parentURL.pathname)

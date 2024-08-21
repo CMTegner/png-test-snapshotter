@@ -281,3 +281,18 @@ test("errs if `diffsLocation` is not a directory", async (t) => {
 		);
 	}
 });
+
+test("errs if `snapshotsLocation` is not a directory", async (t) => {
+	const snapshotsLocation = new URL("__screenshots__", import.meta.url);
+	try {
+		await createSnapshotter(new URL(import.meta.url), {
+			snapshotsLocation,
+		});
+	} catch (error) {
+		assert(error instanceof AssertionError);
+		assert.equal(
+			error.message,
+			`Invalid \`snapshotsLocation\`. Expected the location to be a directory, got "${snapshotsLocation}". (Tip: Ensure that the location has a trailing slash)`,
+		);
+	}
+});
