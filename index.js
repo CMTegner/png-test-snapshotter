@@ -17,6 +17,7 @@ import { PNG } from "pngjs";
 /**
  * @param {URL} parentURL
  * @param {Object} [options]
+ * @param {URL} [options.diffsLocation]
  * @param {boolean} [options.failOnUnmatchedSnapshots]
  * @param {URL} [options.snapshotsLocation]
  * @param {boolean} [options.updateSnapshots]
@@ -25,11 +26,13 @@ import { PNG } from "pngjs";
 export default async function createPNGSnapshotter(
 	parentURL,
 	{
+		diffsLocation = new URL(`file://${os.tmpdir()}/`),
 		failOnUnmatchedSnapshots = !process.execArgv.includes("--test-only"),
 		snapshotsLocation = new URL("__snapshots__/", parentURL),
 		updateSnapshots = process.execArgv.includes("--test-update-snapshots"),
 	} = {},
 ) {
+	await fs.mkdir(diffsLocation, { recursive: true });
 	await fs.mkdir(snapshotsLocation, { recursive: true });
 	const safeSuiteFilename = path
 		.basename(parentURL.pathname)
@@ -64,9 +67,9 @@ export default async function createPNGSnapshotter(
 				await fs.readFile(new URL(snapshotFilename, snapshotsLocation)),
 			);
 			if (width !== expected.width || height !== expected.height) {
-				const actualFilename = path.join(
-					os.tmpdir(),
+				const actualFilename = new URL(
 					`actual_${snapshotFilename}`,
+					diffsLocation,
 				);
 				await fs.writeFile(actualFilename, PNG.sync.write(actual));
 				assert.fail(
@@ -79,9 +82,9 @@ export default async function createPNGSnapshotter(
 				PNG.bitblt(expected, comparison, 0, 0, width, height, 0, 0);
 				PNG.bitblt(diff, comparison, 0, 0, width, height, width, 0);
 				PNG.bitblt(actual, comparison, 0, 0, width, height, width * 2, 0);
-				const comparisonFileName = path.join(
-					os.tmpdir(),
+				const comparisonFileName = new URL(
 					`expected-diff-actual_${snapshotFilename}`,
+					diffsLocation,
 				);
 				await fs.writeFile(comparisonFileName, PNG.sync.write(comparison));
 				assert.fail(

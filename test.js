@@ -74,6 +74,7 @@ test("does not err on snapshot match", async (t) => {
 });
 
 test("errs on snapshot content mismatch", async (t) => {
+	const diffsLocation = new URL("__diffs__/", import.meta.url);
 	let assertSnapshot;
 	try {
 		await fs.mkdir(new URL("__snapshots__", import.meta.url));
@@ -92,6 +93,7 @@ test("errs on snapshot content mismatch", async (t) => {
 			),
 		);
 		assertSnapshot = await createSnapshotter(new URL(import.meta.url), {
+			diffsLocation,
 			failOnUnmatchedSnapshots: true,
 			updateSnapshots: false,
 		});
@@ -105,11 +107,19 @@ test("errs on snapshot content mismatch", async (t) => {
 			/Found 4750 mismatched pixels\. See (.*) for a visual difference\./;
 		const match = pattern.exec(error.message);
 		assert(match);
+		assert.equal(
+			new URL(match[1]).toString(),
+			`${diffsLocation}expected-diff-actual_test_js_errs_on_snapshot_content_mismatch_1.png`,
+		);
 		assert(assertSnapshot);
-		await assertSnapshot(t.name, await fs.readFile(match[1]));
+		await assertSnapshot(t.name, await fs.readFile(new URL(match[1])));
 		assertSnapshot.assertNoUnmatchedSnapshots();
 	} finally {
 		await fs.rm(new URL("__snapshots__", import.meta.url), {
+			force: true,
+			recursive: true,
+		});
+		await fs.rm(diffsLocation, {
 			force: true,
 			recursive: true,
 		});
@@ -149,7 +159,7 @@ test("errs on snapshot size mismatch", async (t) => {
 		const match = pattern.exec(error.message);
 		assert(match);
 		assert(assertSnapshot);
-		await assertSnapshot(t.name, await fs.readFile(match[1]));
+		await assertSnapshot(t.name, await fs.readFile(new URL(match[1])));
 		assertSnapshot.assertNoUnmatchedSnapshots();
 	} finally {
 		await fs.rm(new URL("__snapshots__", import.meta.url), {
